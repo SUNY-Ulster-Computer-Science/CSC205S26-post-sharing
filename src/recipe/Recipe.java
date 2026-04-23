@@ -2,6 +2,8 @@ package recipe;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//String[] tagList = {"Breakfast", "Lunch", "Dinner", "Dessert", "Vegetarian", "Vegan", "Gluten-Free"};
+
 /**
  * This class is meant to represent a recipe with all of the key data points such as a title, description, ingredient list and
  * step list both represented as Array Lists with the string typing
@@ -13,13 +15,16 @@ public class Recipe {
 	String description;
 	ArrayList<String> ingredients = new ArrayList<String>();
 	ArrayList<String> steps = new ArrayList<String>();
+	boolean[] tags = {false, false, false, false, false, false, false};
+	
 	
 	//Constructor 
-	public Recipe(String title, String description, ArrayList<String> ingredients, ArrayList<String> steps) {
+	public Recipe(String title, String description, ArrayList<String> ingredients, ArrayList<String> steps, boolean[] tags) {
 		this.title = title;
 		this.description = description;
 		this.ingredients = ingredients;
 		this.steps = steps;
+		this.tags = tags;
 	}
 	
 	/**
