@@ -13,13 +13,16 @@ public class Recipe {
 	String description;
 	ArrayList<String> ingredients = new ArrayList<String>();
 	ArrayList<String> steps = new ArrayList<String>();
+	boolean[] tags = {false, false, false, false, false, false, false};
+	
 	
 	//Constructor 
-	public Recipe(String title, String description, ArrayList<String> ingredients, ArrayList<String> steps) {
+	public Recipe(String title, String description, ArrayList<String> ingredients, ArrayList<String> steps, boolean[] tags) {
 		this.title = title;
 		this.description = description;
 		this.ingredients = ingredients;
 		this.steps = steps;
+    this.tags = tags;
 	}
 	
 	/**
