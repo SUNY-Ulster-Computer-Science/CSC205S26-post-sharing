@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class AddRecipe {
 	
-	
-	public Recipe addRecipe() {
+	public static Recipe addRecipe() {
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("Firstly, what would you like to title your recipe?");

@@ -1,12 +1,15 @@
 package maindisplay;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import recipe.*;
 
 public class MainDisplay {
 	
 	    public static void main(String[] args) {
 	        Scanner scanner = new Scanner(System.in);
 	        int selectionChoice;
+	        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
 	        System.out.println("--- Welcome to Recipe World ---");
 	        
@@ -15,7 +18,8 @@ public class MainDisplay {
 	        System.out.println("1. View Recipe");
 	        System.out.println("2. Add Recipe");
 	        System.out.println("3. Remove Recipe");
-	        System.out.print("Please enter your selection here (1-3): ");
+	        System.out.println("4. Save Recipe");
+	        System.out.print("Please enter your selection here (1-4): ");
 	        
 	        selectionChoice = scanner.nextInt();
 
@@ -27,12 +31,17 @@ public class MainDisplay {
 	                break;
 	            case 2:
 	                System.out.println("\n[Adding Recipe]");
-	                displayCategoryMenu(scanner);
+	                Recipe newRecipe = AddRecipe.addRecipe();
+	                recipes.add(newRecipe);
+	                
 	                break;
 	            case 3:
 	                System.out.println("\n[Removing Recipe]");
 	                displayCategoryMenu(scanner);
 	                break;
+	            case 4:
+	            	System.out.println("...");
+	            	break;
 	            default:
 	                System.out.println("Invalid selection. Please restart and choose 1-3.");
 	        }
