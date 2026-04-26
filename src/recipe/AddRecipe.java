@@ -1,12 +1,12 @@
 package recipe;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class AddRecipe {
 	
-	public static Recipe addRecipe() {
-		Scanner input = new Scanner(System.in);
-		
+	
+	public static Recipe addRecipe(Scanner input) {		
 		System.out.println("Firstly, what would you like to title your recipe?");
 		String title = input.nextLine();
 		
@@ -41,13 +41,38 @@ public class AddRecipe {
 		
 		boolean[] newTags = {false, false, false, false, false, false, false};
 		System.out.println("Finally, lets add a tag to your recipe so you can find it easier later");
+		while(true) {
+			System.out.println("To choose a tag please input the number next to it.");
+			System.out.println("1. Breakfast\n2. Lunch\n3. Dinner\n4. Dessert\n5. Vegetarian\n6. Vegan\n7. Gluten Free");
+			try {
+				int tag = input.nextInt();
+				if(tag > 0 && tag <= 7) {
+					newTags[tag - 1] = true;
+				}
+				else {
+					System.out.println("Please input a valid number 1-7");
+				}
+			}
+			catch(InputMismatchException e) {
+				System.out.println("Please input a valid number 1-7");
+			}
+			
+			System.out.println("Would you like to add another tag? Input yes");
+			String cont = input.nextLine();
+			if(cont.equalsIgnoreCase("yes")) {
+			}
+			else
+			{
+				break;
+			}
+		}
 		
-		
-		
+		input.nextLine();
 		Recipe newRecipe = new Recipe(title, description, ingredients, steps, newTags);
 		
-		input.close();
+		System.out.printf("Your recipe for %s has been sucessfully added to the database! Press enter to continue to the main menu", newRecipe.getTitle());
+		input.nextLine();
+		
 		return newRecipe;
 	}
 }
-

@@ -22,7 +22,39 @@ public class Recipe {
 		this.description = description;
 		this.ingredients = ingredients;
 		this.steps = steps;
-    this.tags = tags;
+		this.tags = tags;
+	}
+	
+	/**
+	 * This method returns the title for an instance of the recipe class
+	 * @return String title
+	 */
+	public String getTitle(){
+		return this.title;
+	}
+	
+	/**
+	 * This method sets a new title for an instance of the recipe class
+	 * @param String newTitle
+	 */
+	public void setTitle(String newTitle) {
+		this.title = newTitle;
+	}
+	
+	/**
+	 * This method returns the description for an instance of the recipe class
+	 * @return String description
+	 */
+	public String getDesc(){
+		return this.description;
+	}
+	
+	/**
+	 * This method sets a new description for an instance of the recipe class
+	 * @param String newDesc 
+	 */
+	public void setDesc(String newDesc) {
+		this.title = newDesc;
 	}
 	
 	/**
