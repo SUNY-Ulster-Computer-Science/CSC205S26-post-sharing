@@ -57,15 +57,16 @@ public class Recipe {
 		this.title = newDesc;
 	}
 	
+	public boolean tagValue(int index) {
+		return this.tags[index];
+	}
+	
 	/**
 	 * This method will override the print method in order to print the recipe in steps
 	 * It will use both the listIngredients method and the listSteps method in order to print the recipe in steps
 	 * @return
 	 */
-	public void printRecipe() {
-		//This scanner is used in order to require user input to view the next section of the recipe
-		Scanner input = new Scanner(System.in);
-		
+	public void printRecipe(Scanner input) {
 		//First print the title, then a break and then the description of the recipe
 		System.out.printf("Title- %s%nDescription- %s", this.title, this.description);
 		input.nextLine();
@@ -78,9 +79,7 @@ public class Recipe {
 		
 		//Finally print a header and then use the listSteps method to list the steps of the recipe
 		System.out.printf("Directions-%n");
-		listSteps();
-	
-		input.close();
+		listSteps(input);
 	}
 	
 	/**
@@ -101,9 +100,7 @@ public class Recipe {
 	 * This method lists the steps within the recipe object
 	 * It uses the scanner class in order to use user input to require the user to click enter in order to view the next steps
 	 */
-	private void listSteps() {
-		//This scanner is used to require user input to display the next step
-		Scanner stepList = new Scanner(System.in);
+	private void listSteps(Scanner stepList) {
 		//This int is used to count the step number
 		int y = 1;
 		
@@ -114,7 +111,5 @@ public class Recipe {
 			stepList.nextLine();
 			//Then wait for user input before printing the next step
 		}
-		
-		stepList.close();
 	}
 }
