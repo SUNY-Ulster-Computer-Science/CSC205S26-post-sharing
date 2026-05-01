@@ -50,11 +50,59 @@ public class Recipe {
 	}
 	
 	/**
+     * This method returns the list of ingredients for the recipe
+     * @return ArrayList of strings containing ingredients
+     */
+    public ArrayList<String> getIngredients() {
+        return this.ingredients;
+    }
+
+    /**
+     * This method updates the entire list of ingredients for the recipe
+     * @param newIngredients ArrayList of strings containing the new ingredients
+     */
+    public void setIngredients(ArrayList<String> newIngredients) {
+        this.ingredients = newIngredients;
+    }
+    
+    /**
+     * This method returns the list of directions for the recipe
+     * @return ArrayList of strings containing steps
+     */
+    public ArrayList<String> getSteps() {
+        return this.steps;
+    }
+
+    /**
+     * This method updates the entire list of preparation steps for the recipe
+     * @param newSteps ArrayList of strings containing the new directions
+     */
+    public void setSteps(ArrayList<String> newSteps) {
+        this.steps = newSteps;
+    }
+    
+    /**
+     * This method returns the entire array of category tags
+     * @return boolean array of tags
+     */
+    public boolean[] getTags() {
+        return this.tags;
+    }
+	
+    /**
+     * This method updates the category tags for the recipe
+     * @param newTags A boolean array where each index represents a specific category (e.g., Breakfast, Vegan)
+     */
+    public void setTags(boolean[] newTags) {
+        this.tags = newTags;
+    }
+    
+	/**
 	 * This method sets a new description for an instance of the recipe class
 	 * @param String newDesc 
 	 */
 	public void setDesc(String newDesc) {
-		this.title = newDesc;
+		this.description = newDesc;
 	}
 	
 	public boolean tagValue(int index) {
