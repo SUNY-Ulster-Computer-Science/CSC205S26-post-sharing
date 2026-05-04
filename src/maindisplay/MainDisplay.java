@@ -5,8 +5,19 @@ import java.util.ArrayList;
 import recipe.*;
 import java.util.InputMismatchException;
 
+/**
+ * MainDisplay class is the primary user interface for Recipe World.
+ * It manages the main execution loop, menu navigation, and the lists of recipes. 
+ * 
+ */
 public class MainDisplay {
 	
+	/**
+     * The main method runs the primary program loop. It starts the recipe 
+     * storage and handles the user's menu selections such as viewing, 
+     * adding, editing, removing, saving, and filtering recipes.
+     * 
+     */	
 	    public static void main(String[] args) {
 	        Scanner scanner = new Scanner(System.in);
 	        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
@@ -14,6 +25,8 @@ public class MainDisplay {
 	        
 
 	        System.out.println("--- Welcome to Recipe World ---");
+	        
+	        // Starts the application loop
 	        while(true) {
 	        	// Main display page
 		        System.out.println("\nPlease select what you would like to do:");
@@ -27,22 +40,27 @@ public class MainDisplay {
 		        System.out.println("8. Close Application");
 		        System.out.print("Please enter your selection here (1-8): ");
 		        
-		        
+		        // Reads the user's menu choice
 		        String selectionChoice = scanner.nextLine();
+		        
+		        // Checks exit condition from the start
 		        if(selectionChoice.equals("8"))
 		        {
 		        	break;
 		        }
 
-		        // Main selection choices
+		        // Executes the main menu selection choices
 		        switch (selectionChoice) {
 		            case "1":
 		            	System.out.println("\n[Viewing Recipe]");
 		            	int selectionV = 0;
+		            	
+		            	// Prioritizes showing a filtered list first if any filters are active
 		                if(filteredRecipes.size() > 0) {
 		                	selectionV = selectRecipe(scanner, filteredRecipes);
 		                	(filteredRecipes.get(selectionV - 1)).printRecipe(scanner);
 		                }
+		                // If not, shows the full list if it isn't empty
 		                else if(recipes.size() > 0) {
 		                	selectionV = selectRecipe(scanner, recipes);
 		                	(recipes.get(selectionV - 1)).printRecipe(scanner);
@@ -56,11 +74,24 @@ public class MainDisplay {
 		                
 		            case "2":
 		                System.out.println("\n[Adding Recipe]");
+		                // Utilizes AddRecipe class and stores the recipe in a list
 		                Recipe newRecipe = AddRecipe.addRecipe(scanner);
 		                recipes.add(newRecipe);
 		                clear();
 		                break;
 		                
+		            case "3":
+		                System.out.println("\n[Editing Recipe]");
+		                int selectionE = 0;
+		                if (recipes.size() > 0) {
+		                    selectionE = selectRecipe(scanner, recipes);		                    
+		                    scanner.nextLine(); 	
+		                    // Utilizes the EditRecipe class for editing
+		                    EditRecipe.edit(scanner, recipes.get(selectionE - 1));
+		                } else {
+		                    System.out.println("Please add Recipes to the list before trying to edit!");
+		                }
+		                break;    
 		                
 		            case "4":
 		                System.out.println("\n[Removing Recipe]");
@@ -83,19 +114,25 @@ public class MainDisplay {
 		            	
 		            case "6":
 		            	ArrayList<Integer> tags = new ArrayList<Integer>();
+		            	// Clears any previous results
 		            	filteredRecipes.clear();
+		            	// Gets any tags from the user
 		            	tags = selectTags(scanner);
 		            	boolean filter = true;
+		            	// Checks list with chosen tags
 		            	for(Recipe recipe : recipes) {
 		            		for(int tag : tags) {
+		            			// Checks if recipe matches chosen tag
 		            			if(recipe.tagValue(tag)) {
 		            				filter = true;
 		            			}
 		            			else {
+		            				// Any tag that doesn't match will not be in results
 		            				filter = false;
 		            				break;
 		            			}
 		            		}
+		            		// Adds to filtered list if the tag check is passed
 		            		if(filter) {
 		            			filteredRecipes.add(recipe);
 		            		}
@@ -106,6 +143,7 @@ public class MainDisplay {
 		            	
 		            	
 		            case "7":
+		            	// Clears space visually and empties the filtered results list
 		            	clear();
 		            	System.out.println("Filters Reset");
 		            	filteredRecipes.clear();
@@ -113,10 +151,12 @@ public class MainDisplay {
 		            	
 		            	
 		            default:
+		            	// Catches any non-numerical or alphabetical inputs not seen in the main menu prompt
 		                System.out.println("Invalid selection. Please restart and choose 1-8.");
 		        }
 	        }
 	        
+	        // Exit message
 	        System.out.println("Thank you for using Recipe World! See you soon. :)");
 	        scanner.close();
 	    }
@@ -137,15 +177,20 @@ public class MainDisplay {
 	        
 	        ArrayList<Integer> tagSelections = new ArrayList<Integer>();
 	        boolean going = true;
+	        
+	        // Loops to allow the user to select multiple tags
 	        while(going) {
 	        	System.out.println("Please enter the tag category you would like to filter here (1-7): ");
 	        	System.out.println("When you are done inputting tags please input END");
 	        	
 	        	String tagSelection = scanner.nextLine();
-	        	if(tagSelection.equalsIgnoreCase("end")) {
+	        	
+	        	// Checks for the exit keyword 'END'
+	        	if(tagSelection.equalsIgnoreCase("END")) {
 	        		going = false;
 	        	}
 	        	
+	        	// Maps menu numbers to the array index choices 0-6 used in the Recipe class
 	        	switch (tagSelection) {
 	        		case "1":
 	        			tagSelections.add(0);
@@ -169,9 +214,12 @@ public class MainDisplay {
 	        			tagSelections.add(6);
 	        			break;
 	        		default: 
+	        			// Ignores any invalid inputs other than 'END'
+	        			if(!tagSelection.equalsIgnoreCase("END")) {
 	        			System.out.println("Please input a valid tag selection");
 	        	}
 	        }
+	     }
 			return tagSelections;
 	    }
 	    
@@ -189,7 +237,7 @@ public class MainDisplay {
         		System.out.printf("%d. %s%n", i + 1, (recipes.get(i)).getTitle());
         	}
         	boolean valid = false;
-        	System.out.println("Which Recipe would you like to view? (Input the number)");
+        	System.out.println("Which Recipe would you like to view? (Input the number then hit 'enter')");
         	while(!valid) {
         		try {
             		recipeNum = scanner.nextInt();
@@ -217,9 +265,4 @@ public class MainDisplay {
 	    	}
 	    }
 	    
-	    public static void clear() {
-	    	for(int i = 0; i < 50; i++) {
-	    		System.out.println("");
-	    	}
-	    }
 }
