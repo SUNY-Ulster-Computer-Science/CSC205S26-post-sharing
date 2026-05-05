@@ -34,17 +34,16 @@ public class MainDisplay {
 		        System.out.println("2. Add Recipe");
 		        System.out.println("3. Edit Recipe");
 		        System.out.println("4. Remove Recipe");
-		        System.out.println("5. Save Recipe");
-		        System.out.println("6. Filter Recipes");
-		        System.out.println("7. Reset Filters");
-		        System.out.println("8. Close Application");
-		        System.out.print("Please enter your selection here (1-8): ");
+		        System.out.println("5. Filter Recipes");
+		        System.out.println("6. Reset Filters");
+		        System.out.println("7. Close Application");
+		        System.out.print("Please enter your selection here (1-7): ");
 		        
 		        // Reads the user's menu choice
 		        String selectionChoice = scanner.nextLine();
 		        
 		        // Checks exit condition from the start
-		        if(selectionChoice.equals("8"))
+		        if(selectionChoice.equals("7"))
 		        {
 		        	break;
 		        }
@@ -83,36 +82,48 @@ public class MainDisplay {
 		            case "3":
 		                System.out.println("\n[Editing Recipe]");
 		                int selectionE = 0;
-		                if (recipes.size() > 0) {
+		                if(filteredRecipes.size() > 0) {
+		                	selectionE = selectRecipe(scanner, filteredRecipes);		                    
+		                    scanner.nextLine(); 	
+		                    // Utilizes the EditRecipe class for editing
+		                    EditRecipe.edit(scanner, filteredRecipes.get(selectionE - 1));
+		                }
+		                else if (recipes.size() > 0) {
 		                    selectionE = selectRecipe(scanner, recipes);		                    
 		                    scanner.nextLine(); 	
 		                    // Utilizes the EditRecipe class for editing
 		                    EditRecipe.edit(scanner, recipes.get(selectionE - 1));
-		                } else {
+		                } 
+		                else {
 		                    System.out.println("Please add Recipes to the list before trying to edit!");
 		                }
 		                break;    
 		                
 		            case "4":
+		            	String confirm = "";
 		                System.out.println("\n[Removing Recipe]");
 		                int selectionR = 0;
 		                if(recipes.size() > 0) {
 		                	selectionR = selectRecipe(scanner, recipes);
-		                	//(recipes.get(selectionR - 1)).removeRecipe(scanner, recipes);
+		                	scanner.nextLine();
+		                	System.out.printf("Would you like to remove the %s recipe from the recipe list, enter yes to confirm", (recipes.get(selectionR - 1)).getTitle());
+		                	confirm = scanner.nextLine();
+		                	if(confirm.equalsIgnoreCase("YES")) {
+		                		recipes.remove(selectionR - 1);
+		                		System.out.println("Recipe succesfully removed");
+		                	}
+		                	else {
+		                		System.out.println("Recipe not removed");
+		                	}
 		                }
 		                else
 		                {
 		                	System.out.println("Please add Recipes to the list before removing!");
 		                }
 		                break;
-		                
-		                
+		            	
+		            	
 		            case "5":
-		            	System.out.println("...");
-		            	break;
-		            	
-		            	
-		            case "6":
 		            	ArrayList<Integer> tags = new ArrayList<Integer>();
 		            	// Clears any previous results
 		            	filteredRecipes.clear();
@@ -142,7 +153,7 @@ public class MainDisplay {
 		            	break;
 		            	
 		            	
-		            case "7":
+		            case "6":
 		            	// Clears space visually and empties the filtered results list
 		            	clear();
 		            	System.out.println("Filters Reset");
@@ -152,7 +163,7 @@ public class MainDisplay {
 		            	
 		            default:
 		            	// Catches any non-numerical or alphabetical inputs not seen in the main menu prompt
-		                System.out.println("Invalid selection. Please restart and choose 1-8.");
+		                System.out.println("Invalid selection. Please restart and choose 1-7.");
 		        }
 	        }
 	        
